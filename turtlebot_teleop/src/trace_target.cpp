@@ -21,6 +21,8 @@ double targetq[4] = {0,0,0,0};
 double v_cmd_x;
 double v_cmd_y;
 double w_cmd;
+double target_alpha;
+double target_beta;
 
 double d,alpha,beta;
 //0.01, 0.05, 0.005
@@ -65,17 +67,32 @@ int main(int argc, char ** argv){
     geometry_msgs::Twist msg;
     while(ros::ok()){
      	d = sqrt(pow(targetX-x,2)+pow(targetY-y,2));
-		alpha = atan2(targetY-y,targetX-x)*r2d-degree;
-        // if(alpha>180)
-		// 	alpha = alpha*-1;//shortest direction
-		beta = targetd - degree;
-		// if(beta>180)
-		// 	beta = beta*-1;//shortest direction
+		target_alpha = atan2(targetY-y,targetX-x)*r2d;
+		target_beta = targetd;
+		
+		
+		double degree_360 = degree;
+		if(target_alpha<0) target_alpha+=360;
+		if(target_beta<0) target_beta+=360;
+		if(degree<0)degree_360 +=360;
+
+		alpha = target_alpha-degree_360;
+		beta = target_beta - degree_360;
+
+		if(alpha<-180)alpha=360+alpha;
+		if(alpha>180)alpha=alpha-360;
+
+		if(beta<-180)beta=360+beta;
+		if(beta>180)beta=beta-360;
+		
 		v_cmd_x = k[0]*d;
 		v_cmd_y = 0;
 		
 		if (d < dbias)
+		{
+			v_cmd_x = k[0]*d*0.3;
 			w_cmd = k[2]*beta*10;//if reach position increase k beta
+		}
 		else
 			w_cmd = k[1]*alpha + k[2]*beta;
         
