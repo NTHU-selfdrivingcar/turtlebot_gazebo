@@ -20,7 +20,7 @@ double w_cmd;
 
 double d,alpha,beta;
 
-double k[3] = {0.05, 0.05, 0}; //kv kalpha kbeta
+double k[3] = {0.05, 0.05, -0.001}; //kv kalpha kbeta
 
 void loop_pose(const geometry_msgs::Twist pose){
     x = pose.linear.x;
@@ -41,7 +41,7 @@ int main(int argc, char ** argv){
     ros::NodeHandle n;
     ros::Publisher publish = n.advertise<geometry_msgs::Twist>("cmd_vel",1000);
     ros::Subscriber pose = n.subscribe("robot_pose", 1000, loop_pose);
-    int rate = 1;
+    int rate = 10;
     ros::Rate loop_rate(rate);
 
     geometry_msgs::Twist msg;
