@@ -7,7 +7,7 @@
 #define d2r 0.01745f
 #define r2d 57.2958f
 
-#define dbias 0.05f
+#define dbias 0.1f
 
 double degree;
 double x;
@@ -90,7 +90,7 @@ int main(int argc, char ** argv){
 		
 		if (d < dbias)
 		{
-			v_cmd_x = k[0]*d*0.3;
+			v_cmd_x = k[0]*d*0.0;
 			w_cmd = k[2]*beta*10;//if reach position increase k beta
 		}
 		else
