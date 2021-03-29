@@ -7,6 +7,8 @@
 #define d2r 0.01745f
 #define r2d 57.2958f
 
+#define dbias 0.02f
+
 double degree;
 double x;
 double y;
@@ -22,7 +24,7 @@ double w_cmd;
 
 double d,alpha,beta;
 
-double k[3] = {0.05, 0.05, -0.001}; //kv kalpha kbeta
+double k[3] = {0.005, 0.005, 0}; //kv kalpha kbeta
 
 void loop_goal(const geometry_msgs::PoseStamped goalpose){
     targetX = goalpose.pose.position.x;
@@ -63,6 +65,7 @@ int main(int argc, char ** argv){
     while(ros::ok()){
      	d = sqrt(pow(targetX-x,2)+pow(targetY-y,2));
 		alpha = atan2(targetY-y,targetX-x)*r2d-degree;
+        if (d < dbias) alpha = 0;
 		beta = targetd - degree;
 		
 		v_cmd_x = k[0]*d;
