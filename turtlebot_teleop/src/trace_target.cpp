@@ -10,8 +10,8 @@ double degree;
 double x;
 double y;
 
-double targetX=5;
-double targetY=5;
+double targetX=2;
+double targetY=2;
 double targetd=90;
 
 double v_cmd_x;
@@ -20,7 +20,7 @@ double w_cmd;
 
 double d,alpha,beta;
 
-double k[3] = {0.01, 0.05, 0}; //kv kalpha kbeta
+double k[3] = {0.05, 0.05, 0}; //kv kalpha kbeta
 
 void loop_pose(const geometry_msgs::Twist pose){
     x = pose.linear.x;
