@@ -24,7 +24,7 @@ double w_cmd;
 
 double d,alpha,beta;
 
-double k[3] = {0.005, 0.05, 0}; //kv kalpha kbeta
+double k[3] = {0.01, 0.05, 0}; //kv kalpha kbeta
 
 void loop_goal(const geometry_msgs::PoseStamped goalpose){
     targetX = goalpose.pose.position.x;
