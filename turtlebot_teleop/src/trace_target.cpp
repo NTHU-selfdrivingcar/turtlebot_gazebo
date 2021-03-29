@@ -1,5 +1,6 @@
 #include <ros/ros.h>
 #include <geometry_msgs/Twist.h>
+#include <geometry_msgs/PoseStamped.h>
 #include "stdio.h"
 #include "math.h"
 
@@ -13,6 +14,7 @@ double y;
 double targetX=2;
 double targetY=2;
 double targetd=90;
+double targetq[4] = {0,0,0,0};
 
 double v_cmd_x;
 double v_cmd_y;
@@ -22,6 +24,19 @@ double d,alpha,beta;
 
 double k[3] = {0.05, 0.05, 0}; //kv kalpha kbeta
 
+void loop_goal(const geometry_msgs::PoseStamped goalpose){
+    targetX = goalpose.pose.position.x;
+	targetY = goalpose.pose.position.y;
+	targetq[0] = goalpose.pose.orientation.x;
+	targetq[1] = goalpose.pose.orientation.y;
+	targetq[2] = goalpose.pose.orientation.z;
+	targetq[3] = goalpose.pose.orientation.w;
+
+	targetd = atan2(2*(targetq[3]*targetq[2]+targetq[0]*targetq[1]),1-2*(targetq[2]*targetq[2]+targetq[1]*targetq[1]));
+
+	targetd = targetd*r2d;
+	ROS_INFO("tarx = %f, tary = %f, tardeg = %lf\n",targetX,targetY,targetd);
+}
 void loop_pose(const geometry_msgs::Twist pose){
     x = pose.linear.x;
 	y = pose.linear.y;
@@ -41,6 +56,7 @@ int main(int argc, char ** argv){
     ros::NodeHandle n;
     ros::Publisher publish = n.advertise<geometry_msgs::Twist>("cmd_vel",1000);
     ros::Subscriber pose = n.subscribe("robot_pose", 1000, loop_pose);
+    ros::Subscriber target = n.subscribe("move_base_simple/goal", 1000, loop_goal);
     int rate = 1;
     ros::Rate loop_rate(rate);
 
