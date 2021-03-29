@@ -70,7 +70,7 @@ int main(int argc, char ** argv){
 		v_cmd_y = 0;
 		w_cmd = k[1]*alpha + k[2]*beta;
         
-		ROS_INFO("cmd v = %lf, w = %lf\n",v_cmd_x,w_cmd);
+		ROS_INFO("cmd v = %lf, w = %lf, tx = %lf, ty = %lf, td = %lf\n",v_cmd_x,w_cmd,targetX,targetY,targetd);
 
 		msg.linear.x = v_cmd_x;
 		msg.linear.y = v_cmd_y;
