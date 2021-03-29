@@ -7,7 +7,7 @@
 #define d2r 0.01745f
 #define r2d 57.2958f
 
-#define dbias 0.02f
+#define dbias 0.05f
 
 double degree;
 double x;
@@ -23,7 +23,7 @@ double v_cmd_y;
 double w_cmd;
 
 double d,alpha,beta;
-
+//0.01, 0.05, 0.005
 double k[3] = {0.01, 0.05, 0.005}; //kv kalpha kbeta
 
 void loop_goal(const geometry_msgs::PoseStamped goalpose){
@@ -43,10 +43,8 @@ void loop_pose(const geometry_msgs::Twist pose){
     x = pose.linear.x;
 	y = pose.linear.y;
     degree = pose.angular.z * r2d;
-    if(degree > 360)
-        degree -= 360;
-    else if(degree < 0)
-        degree += 360;
+    while(degree>360) degree -= 360;
+    while(degree<0) degree += 360;
 	if (degree > 180)
 		degree -=360;
     //printf("theta = %f\n",pose->theta);
@@ -68,12 +66,18 @@ int main(int argc, char ** argv){
     while(ros::ok()){
      	d = sqrt(pow(targetX-x,2)+pow(targetY-y,2));
 		alpha = atan2(targetY-y,targetX-x)*r2d-degree;
-        if (d < dbias) alpha = 0;
+        // if(alpha>180)
+		// 	alpha = alpha*-1;//shortest direction
 		beta = targetd - degree;
-		
+		// if(beta>180)
+		// 	beta = beta*-1;//shortest direction
 		v_cmd_x = k[0]*d;
 		v_cmd_y = 0;
-		w_cmd = k[1]*alpha + k[2]*beta;
+		
+		if (d < dbias)
+			w_cmd = k[2]*beta*10;//if reach position increase k beta
+		else
+			w_cmd = k[1]*alpha + k[2]*beta;
         
 		ROS_INFO("cmd v = %lf, w = %lf, tx = %lf, ty = %lf, td = %lf\n",v_cmd_x,w_cmd,targetX,targetY,targetd);
 
