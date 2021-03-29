@@ -20,7 +20,7 @@ double w_cmd;
 
 double d,alpha,beta;
 
-double k[3] = {10, 50, 0}; //kv kalpha kbeta
+double k[3] = {0.01, 0.05, 0}; //kv kalpha kbeta
 
 void loop_pose(const geometry_msgs::Twist pose){
     x = pose.linear.x;
