@@ -7,7 +7,7 @@
 #define d2r 0.01745f
 #define r2d 57.2958f
 
-#define dbias 0.05f
+#define dbias 0.00f
 
 double degree;
 double x;
@@ -27,7 +27,7 @@ bool flag=true;
 
 double d,alpha,beta;
 //0.01, 0.05, 0.005
-double k[3] = {0.1, 0.4 ,0.0}; //kv kalpha kbeta
+double k[3] = {0.1, 0.3 ,0.2}; //kv kalpha kbeta
 
 void loop_goal(const geometry_msgs::PoseStamped goalpose){
     targetX = goalpose.pose.position.x;
