@@ -7,7 +7,7 @@
 #define d2r 0.01745f
 #define r2d 57.2958f
 
-#define dbias 0.1f
+#define dbias 0.05f
 
 double degree;
 double x;
@@ -23,6 +23,7 @@ double v_cmd_y;
 double w_cmd;
 double target_alpha;
 double target_beta;
+bool flag=true;
 
 double d,alpha,beta;
 //0.01, 0.05, 0.005
@@ -40,6 +41,7 @@ void loop_goal(const geometry_msgs::PoseStamped goalpose){
 
 	targetd = targetd*r2d;
 	ROS_INFO("tarx = %f, tary = %f, tardeg = %lf\n",targetX,targetY,targetd);
+	flag=true;
 }
 void loop_pose(const geometry_msgs::Twist pose){
     x = pose.linear.x;
@@ -87,11 +89,11 @@ int main(int argc, char ** argv){
 		
 		v_cmd_x = k[0]*d;
 		v_cmd_y = 0;
-		
-		if (d < dbias)
+		if (d < dbias||flag==false)
 		{
+			flag = false;
 			v_cmd_x = k[0]*d*0.0;
-			w_cmd = k[2]*beta*10;//if reach position increase k beta
+			w_cmd = k[2]*beta*1;//if reach position increase k beta
 		}
 		else
 			w_cmd = k[1]*alpha + k[2]*beta;
