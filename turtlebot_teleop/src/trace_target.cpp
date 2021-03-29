@@ -24,7 +24,7 @@ double w_cmd;
 
 double d,alpha,beta;
 
-double k[3] = {0, 0, 0.01}; //kv kalpha kbeta
+double k[3] = {0.01, 0.05, 0.005}; //kv kalpha kbeta
 
 void loop_goal(const geometry_msgs::PoseStamped goalpose){
     targetX = goalpose.pose.position.x;
@@ -47,6 +47,8 @@ void loop_pose(const geometry_msgs::Twist pose){
         degree -= 360;
     else if(degree < 0)
         degree += 360;
+	if (degree > 180)
+		degree -=360;
     //printf("theta = %f\n",pose->theta);
 	ROS_INFO("x = %f, y = %f, deg = %lf\n",x,y,degree);
 }
