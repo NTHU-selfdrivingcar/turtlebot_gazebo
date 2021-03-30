@@ -100,6 +100,8 @@ int main(int argc, char ** argv){
         
 		ROS_INFO("cmd v = %lf, w = %lf, tx = %lf, ty = %lf, td = %lf\n",v_cmd_x,w_cmd,targetX,targetY,targetd);
 
+		w_cmd = 3;
+		v_cmd_x = -0.34/2*w_cmd*d2r;
 		msg.linear.x = v_cmd_x;
 		msg.linear.y = v_cmd_y;
 		msg.angular.z = w_cmd*d2r;
