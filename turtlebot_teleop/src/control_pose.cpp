@@ -141,6 +141,7 @@ class CAR{
               tf2::Matrix3x3 m(q);
               double roll,pitch,yaw;
               m.getRPY(roll,pitch,yaw);
+	      set_degree_to_defined_domain(&yaw);
               return yaw;
         }
         void set_goal(const geometry_msgs::PoseStamped::ConstPtr& goal){

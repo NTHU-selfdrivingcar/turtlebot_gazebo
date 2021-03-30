@@ -18,6 +18,9 @@ catkin_package(
 add_executable(turtlebot_trace_target src/trace_target.cpp)
 target_link_libraries(turtlebot_trace_target ${catkin_LIBRARIES})
 
+add_executable(turtlebot_control_pose src/control_pose.cpp)
+target_link_libraries(turtlebot_control_pose ${catkin_LIBRARIES})
+
 add_executable(turtlebot_teleop_joy src/turtlebot_joy.cpp)
 target_link_libraries(turtlebot_teleop_joy ${catkin_LIBRARIES})
 #############
