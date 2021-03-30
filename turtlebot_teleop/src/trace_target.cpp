@@ -28,7 +28,7 @@ bool flag=true;
 double d,alpha,beta;
 //0.01, 0.05, 0.005
 double k[3] = {0.1, 0.3 ,0.1}; //kv kalpha kbeta
-double knear[3] = {-0.002, 0.0 ,1}; //kv kalpha kbeta
+double knear[3] = {0.005, 0.0 ,0.3}; //kv kalpha kbeta
 
 void loop_goal(const geometry_msgs::PoseStamped goalpose){
     targetX = goalpose.pose.position.x;
@@ -92,7 +92,7 @@ int main(int argc, char ** argv){
 		v_cmd_y = 0;
 		if (d < dbias||flag==false)
 		{
-			//flag = false;
+			flag = false;
 			v_cmd_x = knear[0]*d;
 			w_cmd = k[1]*alpha + knear[2]*beta;//if reach position increase k beta
 		}
