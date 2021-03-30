@@ -94,7 +94,7 @@ int main(int argc, char ** argv){
 		{
 			flag = false;
 			v_cmd_x = knear[0]*d;
-			w_cmd = k[1]*alpha + knear[2]*beta;//if reach position increase k beta
+			w_cmd = knear[1]*alpha + knear[2]*beta;//if reach position increase k beta
 		}
 		else
 			w_cmd = k[1]*alpha + k[2]*beta;
