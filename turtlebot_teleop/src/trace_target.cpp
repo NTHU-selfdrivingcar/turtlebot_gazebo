@@ -7,7 +7,7 @@
 #define d2r 0.01745f
 #define r2d 57.2958f
 
-#define dbias 0.00f
+#define dbias 0.02f
 
 double degree;
 double x;
@@ -99,7 +99,7 @@ int main(int argc, char ** argv){
 			w_cmd = k[1]*alpha + k[2]*beta;
         
 		ROS_INFO("cmd v = %lf, w = %lf, tx = %lf, ty = %lf, td = %lf\n",v_cmd_x,w_cmd,targetX,targetY,targetd);
-		
+
 		msg.linear.x = v_cmd_x;
 		msg.linear.y = v_cmd_y;
 		msg.angular.z = w_cmd*d2r;
