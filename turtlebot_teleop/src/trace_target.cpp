@@ -28,7 +28,7 @@ bool flag=true;
 double d,alpha,beta;
 //0.01, 0.05, 0.005
 double k[3] = {0.1, 0.3 ,0.1}; //kv kalpha kbeta
-double knear[3] = {0.005, 0.0 ,0.3}; //kv kalpha kbeta
+double knear[3] = {0.1, 0.0 ,0.3}; //kv kalpha kbeta
 
 void loop_goal(const geometry_msgs::PoseStamped goalpose){
     targetX = goalpose.pose.position.x;
