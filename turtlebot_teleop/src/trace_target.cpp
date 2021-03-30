@@ -98,7 +98,7 @@ int main(int argc, char ** argv){
 		}
 		else
 			w_cmd = k[1]*alpha + k[2]*beta;
-        
+        if(alpha>90||alpha<-90) v_cmd_x *= -1;
         if(w_cmd>30) w_cmd=30;
         if(w_cmd<-30) w_cmd=-30;
 
