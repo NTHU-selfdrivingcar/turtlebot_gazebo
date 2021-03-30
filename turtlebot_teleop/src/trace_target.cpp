@@ -7,7 +7,7 @@
 #define d2r 0.01745f
 #define r2d 57.2958f
 
-#define dbias 0.02f
+#define dbias 0.05f
 
 double degree;
 double x;
@@ -28,6 +28,7 @@ bool flag=true;
 double d,alpha,beta;
 //0.01, 0.05, 0.005
 double k[3] = {0.1, 0.3 ,0.2}; //kv kalpha kbeta
+double knear[3] = {0.05, 0.05 ,0.2}; //kv kalpha kbeta
 
 void loop_goal(const geometry_msgs::PoseStamped goalpose){
     targetX = goalpose.pose.position.x;
@@ -92,12 +93,15 @@ int main(int argc, char ** argv){
 		if (d < dbias||flag==false)
 		{
 			flag = false;
-			v_cmd_x = k[0]*d*0.0;
-			w_cmd = k[2]*beta*0.0;//if reach position increase k beta
+			v_cmd_x = knear[0]*d;
+			w_cmd = k[1]*alpha + knear[2]*beta;//if reach position increase k beta
 		}
 		else
 			w_cmd = k[1]*alpha + k[2]*beta;
         
+        if(w_cmd>30) w_cmd=30;
+        if(w_cmd<-30) w_cmd=-30;
+
 		ROS_INFO("cmd v = %lf, w = %lf, tx = %lf, ty = %lf, td = %lf\n",v_cmd_x,w_cmd,targetX,targetY,targetd);
 
 		msg.linear.x = v_cmd_x;
