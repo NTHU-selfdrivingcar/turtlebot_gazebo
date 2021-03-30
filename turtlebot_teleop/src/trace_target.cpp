@@ -28,7 +28,7 @@ bool flag=true;
 double d,alpha,beta;
 //0.01, 0.05, 0.005
 double k[3] = {0.1, 0.3 ,0.1}; //kv kalpha kbeta
-double knear[3] = {0.1, 0.0 ,0.3}; //kv kalpha kbeta
+double knear[3] = {0.1, 0.02 ,0.3}; //kv kalpha kbeta
 
 void loop_goal(const geometry_msgs::PoseStamped goalpose){
     targetX = goalpose.pose.position.x;
@@ -98,7 +98,8 @@ int main(int argc, char ** argv){
 		}
 		else
 			w_cmd = k[1]*alpha + k[2]*beta;
-        if(alpha>90||alpha<-90) v_cmd_x *= -1;
+        if(alpha>=90) v_cmd_x *= -1;
+        if(alpha<=-90) v_cmd_x *= -1;
         if(w_cmd>30) w_cmd=30;
         if(w_cmd<-30) w_cmd=-30;
 
